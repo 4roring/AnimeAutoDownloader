@@ -30,25 +30,27 @@ def download(download_url: str, download_path: str):
     while True:
         qb_main_data = qb.sync_main_data()
 
-        for torrent_info in qb_main_data['torrents']:
-            if not 'downloading' == torrent_info['state']:
+        torrents: dict = qb_main_data['torrents']
+        for torrent in torrents.values():
+            if not 'downloading' == torrent['state']:
                 break
 
         time.sleep(3.0)
-
 
     # 다운로드 완료 후 공유 삭제
     # 자막 다운로드
 
 
 if __name__ == '__main__':
-    url = 'https://nyaa.si/?page=rss&q=kamen+rider&c=0_0&f=0'
-    episode_num = '36'
+    keyword = 'digimon'
+    url = 'https://nyaa.si/?page=rss&q={}&c=0_0&f=0'.format(keyword)
+
+    episode_num = '49'
     # download_name = '[Erai-raws] SSSS.Dynazenon - {}'.format(episode_num)
-    download_name = '[Hikounin-Raws] Kamen Rider Saber - {}'.format(episode_num)
+    download_name = '[Erai-raws] Digimon Adventure (2020) - {}'.format(episode_num)
     quality = ''
 
-    download_path = 'D:/Movie/Kamen Rider Saber'
+    download_path = 'D:/Movie/Digimon_Adventure'
 
     if not os.path.exists(download_path):
         os.mkdir(download_path)
@@ -62,7 +64,7 @@ if __name__ == '__main__':
             continue
 
         print('download title = ', e.title)
-        # download(e.link, download_path)
+        download(e.link, download_path)
         break
 
     plex_sync()
