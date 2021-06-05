@@ -31,13 +31,13 @@ def download(download_url: str, download_path: str):
         qb_main_data = qb.sync_main_data()
 
         torrents: dict = qb_main_data['torrents']
-        for torrent in torrents.values():
+        for hash_key, torrent in torrents.items():
             if not 'downloading' == torrent['state']:
+                qb.delete([hash_key])
                 break
 
         time.sleep(3.0)
 
-    # 다운로드 완료 후 공유 삭제
     # 자막 다운로드
 
 
@@ -46,11 +46,11 @@ if __name__ == '__main__':
     url = 'https://nyaa.si/?page=rss&q={}&c=0_0&f=0'.format(keyword)
 
     episode_num = '49'
-    # download_name = '[Erai-raws] SSSS.Dynazenon - {}'.format(episode_num)
-    download_name = '[Erai-raws] Digimon Adventure (2020) - {}'.format(episode_num)
+    download_name = '[Erai-raws] SSSS.Dynazenon - {}'.format(episode_num)
+    # download_name = '[Erai-raws] Digimon Adventure (2020) - {}'.format(episode_num)
     quality = ''
 
-    download_path = 'D:/Movie/Digimon_Adventure'
+    download_path = 'D:/Movie/SSSS.Dynazenon'
 
     if not os.path.exists(download_path):
         os.mkdir(download_path)
